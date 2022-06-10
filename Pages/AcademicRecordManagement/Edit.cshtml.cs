@@ -20,21 +20,23 @@ namespace lab4.Pages.AcademicRecordManagement
         }
 
         [BindProperty]
-        public Student Student { get; set; } = default!;
+        public AcademicRecord AcademicRecord { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(string id)
         {
-            if (id == null || _context.Students == null)
+            if (id == null || _context.AcademicRecords == null)
             {
                 return NotFound();
             }
 
-            var student =  await _context.Students.FirstOrDefaultAsync(m => m.Id == id);
-            if (student == null)
+            var academicrecord =  await _context.AcademicRecords.FirstOrDefaultAsync(m => m.StudentId == id);
+            if (academicrecord == null)
             {
                 return NotFound();
             }
-            Student = student;
+            AcademicRecord = academicrecord;
+           ViewData["CourseCode"] = new SelectList(_context.Courses, "Code", "Code");
+           ViewData["StudentId"] = new SelectList(_context.Students, "Id", "Id");
             return Page();
         }
 
@@ -47,7 +49,7 @@ namespace lab4.Pages.AcademicRecordManagement
                 return Page();
             }
 
-            _context.Attach(Student).State = EntityState.Modified;
+            _context.Attach(AcademicRecord).State = EntityState.Modified;
 
             try
             {
@@ -55,7 +57,7 @@ namespace lab4.Pages.AcademicRecordManagement
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!StudentExists(Student.Id))
+                if (!AcademicRecordExists(AcademicRecord.StudentId))
                 {
                     return NotFound();
                 }
@@ -68,9 +70,9 @@ namespace lab4.Pages.AcademicRecordManagement
             return RedirectToPage("./Index");
         }
 
-        private bool StudentExists(string id)
+        private bool AcademicRecordExists(string id)
         {
-          return (_context.Students?.Any(e => e.Id == id)).GetValueOrDefault();
+          return (_context.AcademicRecords?.Any(e => e.StudentId == id)).GetValueOrDefault();
         }
     }
 }

@@ -20,22 +20,24 @@ namespace lab4.Pages.AcademicRecordManagement
 
         public IActionResult OnGet()
         {
+        ViewData["CourseCode"] = new SelectList(_context.Courses, "Code", "Code");
+        ViewData["StudentId"] = new SelectList(_context.Students, "Id", "Id");
             return Page();
         }
 
         [BindProperty]
-        public Student Student { get; set; } = default!;
+        public AcademicRecord AcademicRecord { get; set; } = default!;
         
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-          if (!ModelState.IsValid || _context.Students == null || Student == null)
+          if (!ModelState.IsValid || _context.AcademicRecords == null || AcademicRecord == null)
             {
                 return Page();
             }
 
-            _context.Students.Add(Student);
+            _context.AcademicRecords.Add(AcademicRecord);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

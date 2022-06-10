@@ -19,40 +19,40 @@ namespace lab4.Pages.AcademicRecordManagement
         }
 
         [BindProperty]
-      public Student Student { get; set; } = default!;
+      public AcademicRecord AcademicRecord { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(string id)
         {
-            if (id == null || _context.Students == null)
+            if (id == null || _context.AcademicRecords == null)
             {
                 return NotFound();
             }
 
-            var student = await _context.Students.FirstOrDefaultAsync(m => m.Id == id);
+            var academicrecord = await _context.AcademicRecords.FirstOrDefaultAsync(m => m.StudentId == id);
 
-            if (student == null)
+            if (academicrecord == null)
             {
                 return NotFound();
             }
             else 
             {
-                Student = student;
+                AcademicRecord = academicrecord;
             }
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(string id)
         {
-            if (id == null || _context.Students == null)
+            if (id == null || _context.AcademicRecords == null)
             {
                 return NotFound();
             }
-            var student = await _context.Students.FindAsync(id);
+            var academicrecord = await _context.AcademicRecords.FindAsync(id);
 
-            if (student != null)
+            if (academicrecord != null)
             {
-                Student = student;
-                _context.Students.Remove(Student);
+                AcademicRecord = academicrecord;
+                _context.AcademicRecords.Remove(AcademicRecord);
                 await _context.SaveChangesAsync();
             }
 
