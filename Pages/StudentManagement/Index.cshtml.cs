@@ -18,8 +18,8 @@ namespace lab4.Pages.StudentManagement
             _context = context;
         }
 
-        public IList<Student> Student { get; set; } = default!;
-        public IList<AcademicRecord> AcademicRecord { get; set; } = default!;
+        public List<Student> StudentsList { get; set; } = default!;
+        public List<AcademicRecord> AcademicRecordsList { get; set; } = default!;
 
         public string OrderBy { get; set; }
 
@@ -27,8 +27,8 @@ namespace lab4.Pages.StudentManagement
         {
             if (_context.Students != null)
             {
-                Student = await _context.Students.ToListAsync();
-                AcademicRecord = await _context.AcademicRecords.ToListAsync();
+                StudentsList = await _context.Students.ToListAsync();
+                AcademicRecordsList = await _context.AcademicRecords.ToListAsync();
 
             }
 

@@ -17,26 +17,37 @@
                 <a asp-page="Index" asp-route-orderby="studentName">Name</a>
             </th>
             <th>
-                <a>Number of Courses</a>
+                <a asp-page="Index" asp-route-orderby="numberOfCourses">Number of Courses</a>
             </th>
             <th>
-                <a>Avg. Grade</a>
+                <a asp-page="Index" asp-route-orderby="averageGrade">Avg. Grade</a>
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
         @{
-            IList<lab4.DataAccess.Student> Students = Model.Student;
+            List<lab4.DataAccess.Student> Students = Model.StudentsList;
             
             if (Model.OrderBy == "studentName") {
 
                 Console.WriteLine("order by studentName");
 
+                Model.StudentsList.Sort( (student1, student2) => student1.Name.CompareTo(student2.Name) );
+            }
+
+            if (Model.OrderBy == "numberOfCourses") {
+
+
+                Model.StudentsList.Sort( (student1, student2) => student1.AcademicRecords.Count.CompareTo(student2.AcademicRecords.Count) );
+            }
+
+            if (Model.OrderBy == "averageGrade") {
+
             }
         }
 
-        @foreach (var item in Model.Student) {
+        @foreach (var item in Model.StudentsList) {
                 <tr>
                     <td>
                         @Html.DisplayFor(modelItem => item.Name)
@@ -54,7 +65,6 @@
                                 }
 
                                 var avgGrade = item.AcademicRecords.Count == 0 ? 0 : (sumGrade / item.AcademicRecords.Count);
-
                             }
                             @Html.Raw(avgGrade)
                     </td>
