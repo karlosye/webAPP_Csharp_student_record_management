@@ -2,7 +2,7 @@
 @model lab4.Pages.StudentManagement.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Index - Student Management";
 }
 
 <h1>Index</h1>
@@ -16,6 +16,12 @@
             <th>
                 @Html.DisplayNameFor(model => model.Student[0].Name)
             </th>
+            <th>
+                <a>Number of Courses</a>
+            </th>
+            <th>
+                <a>Avg. Grade</a>
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -26,7 +32,12 @@
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                @Html.DisplayFor(modelItem => item.AcademicRecords.Count)
+            </td>
+            <td>
+                
+            </td>
+            <td>
                 <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
                 <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
             </td>

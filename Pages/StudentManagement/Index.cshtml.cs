@@ -18,14 +18,18 @@ namespace lab4.Pages.StudentManagement
             _context = context;
         }
 
-        public IList<Student> Student { get;set; } = default!;
+        public IList<Student> Student { get; set; } = default!;
+        public IList<AcademicRecord> AcademicRecord { get; set; } = default!;
 
         public async Task OnGetAsync()
         {
             if (_context.Students != null)
             {
                 Student = await _context.Students.ToListAsync();
+                AcademicRecord = await _context.AcademicRecords.ToListAsync();
             }
+
+
         }
     }
 }
