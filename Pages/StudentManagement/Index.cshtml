@@ -35,10 +35,21 @@
                 @Html.DisplayFor(modelItem => item.AcademicRecords.Count)
             </td>
             <td>
-                
+                    @{
+                        int sumGrade = 0;
+
+                        foreach (var AcademicRecord in item.AcademicRecords)
+                        {
+                            if (item.Id == AcademicRecord.StudentId) { sumGrade = sumGrade + (int)AcademicRecord.Grade!; }
+                        }
+
+                        var avgGrade = item.AcademicRecords.Count == 0 ? 0 : (sumGrade / item.AcademicRecords.Count);
+
+                    }
+                    @Html.Raw(avgGrade)
             </td>
             <td>
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-page="./Details" asp-route-id="@item.Id">Details</a>
                 <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
