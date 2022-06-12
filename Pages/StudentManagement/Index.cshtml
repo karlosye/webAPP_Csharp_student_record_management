@@ -87,10 +87,15 @@
 
         deleteBtnList[i].addEventListener("click", function(e){
 
-                //e.preventDefault();
                 let answer = confirm(`Please confirm to delete student: \n\n${deleteBtnList[i].id}\n\nAll his/her acaedmic records will be deleted too!`);
                 
-                if (!answer) {e.preventDefault();}
+                if (!answer) {
+                    e.preventDefault();
+
+                } else {
+
+
+                }
            }   
         )
     }
