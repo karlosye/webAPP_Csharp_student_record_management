@@ -40,6 +40,16 @@ namespace lab4.Pages.StudentManagement
             if (id != null)
             {
                 Console.WriteLine(id);
+
+                var student = await _context.Students!.FindAsync(id);
+
+                if (student != null)
+                {
+                    _context.Students.Remove(student);
+                    await _context.SaveChangesAsync();
+
+                    StudentsList = await _context.Students.ToListAsync();
+                }
             }
         }
 
