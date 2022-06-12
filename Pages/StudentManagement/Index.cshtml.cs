@@ -23,7 +23,7 @@ namespace lab4.Pages.StudentManagement
 
         public string OrderBy { get; set; }
 
-        public async Task OnGetAsync(string orderby)
+        public async Task OnGetAsync(string orderby, string id)
         {
             if (_context.Students != null)
             {
@@ -35,6 +35,11 @@ namespace lab4.Pages.StudentManagement
             if (orderby != null)
             {
                 OrderBy = orderby;
+            }
+
+            if (id != null)
+            {
+                Console.WriteLine(id);
             }
         }
 

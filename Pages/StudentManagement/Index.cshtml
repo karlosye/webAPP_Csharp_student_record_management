@@ -70,7 +70,7 @@
                     </td>
                     <td>
                         <a asp-page="./Details" asp-route-id="@item.Id">Details</a>
-                        <a asp-page="./Delete" asp-route-id="@item.Id" class="delete-btn" id="@item.Name">Delete</a>
+                        <a asp-route-id="@item.Id" class="delete-btn" id="@item.Name" asp-for="@item.Name">Delete</a>
                     </td>
                 </tr>
         }
@@ -93,7 +93,6 @@
                     e.preventDefault();
 
                 } else {
-
 
                 }
            }   
