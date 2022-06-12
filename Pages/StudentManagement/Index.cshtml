@@ -70,9 +70,31 @@
                     </td>
                     <td>
                         <a asp-page="./Details" asp-route-id="@item.Id">Details</a>
-                        <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                        <a asp-page="./Delete" asp-route-id="@item.Id" class="delete-btn" id="@item.Name">Delete</a>
                     </td>
                 </tr>
         }
     </tbody>
 </table>
+
+@section Scripts {
+
+<script type="text/javascript">
+
+    let deleteBtnList = document.querySelectorAll(".delete-btn");
+    
+    for(let i=0; i<deleteBtnList.length; i++) {
+
+        deleteBtnList[i].addEventListener("click", function(e){
+
+                //e.preventDefault();
+                let answer = confirm(`Please confirm to delete student: \n\n${deleteBtnList[i].id}\n\nAll his/her acaedmic records will be deleted too!`);
+                
+                if (!answer) {e.preventDefault();}
+           }   
+        )
+    }
+
+</script>
+
+}
