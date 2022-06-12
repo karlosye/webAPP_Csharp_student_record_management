@@ -21,15 +21,23 @@ namespace lab4.Pages.StudentManagement
         public IList<Student> Student { get; set; } = default!;
         public IList<AcademicRecord> AcademicRecord { get; set; } = default!;
 
-        public async Task OnGetAsync()
+        public string OrderBy { get; set; }
+
+        public async Task OnGetAsync(string orderby)
         {
             if (_context.Students != null)
             {
                 Student = await _context.Students.ToListAsync();
                 AcademicRecord = await _context.AcademicRecords.ToListAsync();
+
             }
 
-
+            if (orderby != null)
+            {
+                OrderBy = orderby;
+            }
         }
+
+
     }
 }

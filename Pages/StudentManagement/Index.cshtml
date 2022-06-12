@@ -14,7 +14,7 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Student[0].Name)
+                <a asp-page="Index" asp-route-orderby="studentName">Name</a>
             </th>
             <th>
                 <a>Number of Courses</a>
@@ -26,33 +26,43 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Student) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AcademicRecords.Count)
-            </td>
-            <td>
-                    @{
-                        int sumGrade = 0;
+        @{
+            IList<lab4.DataAccess.Student> Students = Model.Student;
+            
+            if (Model.OrderBy == "studentName") {
 
-                        foreach (var AcademicRecord in item.AcademicRecords)
-                        {
-                            if (item.Id == AcademicRecord.StudentId) { sumGrade = sumGrade + (int)AcademicRecord.Grade!; }
-                        }
+                Console.WriteLine("order by studentName");
 
-                        var avgGrade = item.AcademicRecords.Count == 0 ? 0 : (sumGrade / item.AcademicRecords.Count);
+            }
+        }
 
-                    }
-                    @Html.Raw(avgGrade)
-            </td>
-            <td>
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a>
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.Student) {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AcademicRecords.Count)
+                    </td>
+                    <td>
+                            @{
+                                int sumGrade = 0;
+
+                                foreach (var AcademicRecord in item.AcademicRecords)
+                                {
+                                    if (item.Id == AcademicRecord.StudentId) { sumGrade = sumGrade + (int)AcademicRecord.Grade!; }
+                                }
+
+                                var avgGrade = item.AcademicRecords.Count == 0 ? 0 : (sumGrade / item.AcademicRecords.Count);
+
+                            }
+                            @Html.Raw(avgGrade)
+                    </td>
+                    <td>
+                        <a asp-page="./Details" asp-route-id="@item.Id">Details</a>
+                        <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
+        }
     </tbody>
 </table>
