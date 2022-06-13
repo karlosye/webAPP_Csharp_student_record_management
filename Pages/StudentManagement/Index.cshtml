@@ -3,6 +3,22 @@
 
 @{
     ViewData["Title"] = "Index - Student Management";
+
+    var studentAverageMapping = new System.Collections.Hashtable();
+
+    foreach (var student in Model.StudentsList)
+    {
+        int sumGrade = 0;
+
+        foreach (var AcademicRecord in Model.AcademicRecordsList)
+        {
+            if (student.Id == AcademicRecord.StudentId) { sumGrade = sumGrade + (int)AcademicRecord.Grade!; }
+        }
+
+        var avgGrade = student.AcademicRecords.Count == 0 ? 0 : (sumGrade / student.AcademicRecords.Count);
+
+        studentAverageMapping.Add(student.Name , avgGrade);
+    }
 }
 
 <h1>Index</h1>
@@ -27,23 +43,21 @@
     </thead>
     <tbody>
         @{
-            List<lab4.DataAccess.Student> Students = Model.StudentsList;
             
             if (Model.OrderBy == "studentName") {
-
-                Console.WriteLine("order by studentName");
 
                 Model.StudentsList.Sort( (student1, student2) => student1.Name.CompareTo(student2.Name) );
             }
 
             if (Model.OrderBy == "numberOfCourses") {
 
-
                 Model.StudentsList.Sort( (student1, student2) => student1.AcademicRecords.Count.CompareTo(student2.AcademicRecords.Count) );
             }
 
             if (Model.OrderBy == "averageGrade") {
 
+                Model.StudentsList = Model.StudentsList.OrderBy(student => studentAverageMapping[student.Name]).ToList();
+                //Model.StudentsList.Sort( (student1, student2)  =>  double.Compare(studentAverageMapping[student1.Name], studentAverageMapping[student2.Name]));
             }
         }
 
@@ -56,6 +70,7 @@
                         @Html.DisplayFor(modelItem => item.AcademicRecords.Count)
                     </td>
                     <td>
+                            @*
                             @{
                                 int sumGrade = 0;
 
@@ -66,7 +81,8 @@
 
                                 var avgGrade = item.AcademicRecords.Count == 0 ? 0 : (sumGrade / item.AcademicRecords.Count);
                             }
-                            @Html.Raw(avgGrade)
+                            @Html.Raw(avgGrade) *@
+                        @Html.Raw(studentAverageMapping[item.Name])
                     </td>
                     <td>
                         <a asp-page="./Details" asp-route-id="@item.Id">Details</a>
