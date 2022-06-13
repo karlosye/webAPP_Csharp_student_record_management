@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using lab4.DataAccess;
+using Microsoft.EntityFrameworkCore;
 
 namespace lab4.Pages.StudentManagement
 {
@@ -25,13 +26,27 @@ namespace lab4.Pages.StudentManagement
 
         [BindProperty]
         public Student Student { get; set; } = default!;
-        
+
+        public string errorMsg { get; set; } = "";
+
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-          if (!ModelState.IsValid || _context.Students == null || Student == null)
+            Console.WriteLine(Student.Id);
+
+            if (!ModelState.IsValid || _context.Students == null || Student == null)
             {
+                return Page();
+            }
+
+            //StudentsList = await _context.Students.ToListAsync();
+
+            var findStudent = await _context.Students!.FindAsync(Student.Id);
+
+            if (findStudent != null)
+            {
+                errorMsg = $"Student Id, {Student.Id} already exist!";
                 return Page();
             }
 
