@@ -19,7 +19,38 @@
         </dd>
     </dl>
 </div>
+
 <div>
-    <a asp-page="./Edit" asp-route-id="@Model.Student?.Id">Edit</a> |
+    <h1>Academic Records</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th><label class="control-label">Course</label></th>
+                <th><label class="control-label">Grade</label></th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            @foreach(var availableCourse in Model.AllAvailableCoursesList) {
+
+                @foreach(var record in Model.AcademicRecordsList){
+
+                    if (record.CourseCode == availableCourse.Code) {
+
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => availableCourse.Title)</td>
+                            <td>@Html.DisplayFor(modelItem => record.Grade)</td>
+                        </tr>
+                    }
+                }
+            }    
+        </tbody>
+    </table>
+
+</div>
+
+
+<div>
     <a asp-page="./Index">Back to List</a>
 </div>
