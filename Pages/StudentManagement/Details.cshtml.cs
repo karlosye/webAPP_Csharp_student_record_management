@@ -24,7 +24,7 @@ namespace lab4.Pages.StudentManagement
 
         public Student Student { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(string id)
+        public async Task<IActionResult> OnGetAsync(string id, string orderby)
         {
             if (id == null || _context.Students == null)
             {
@@ -35,17 +35,21 @@ namespace lab4.Pages.StudentManagement
             if (student == null)
             {
                 return NotFound();
+
             }
             else
             {
                 Student = student;
-                //AcademicRecordsList = await _context.AcademicRecords.ToListAsync();
 
                 AcademicRecordsList = await _context.AcademicRecords.Where(m => m.StudentId == id).ToListAsync();
-                var allCourses = await _context.Courses.ToListAsync();
 
                 AllAvailableCoursesList = await _context.Courses.ToListAsync();
             }
+
+            if (orderby == "Course") { AllAvailableCoursesList.Sort((c1, c2) => c1.Title.CompareTo(c2.Title)); }
+
+            if (orderby == "Grade") { AcademicRecordsList.OrderBy(record => record.Grade); }
+
             return Page();
         }
     }

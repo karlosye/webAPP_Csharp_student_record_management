@@ -25,8 +25,8 @@
     <table class="table">
         <thead>
             <tr>
-                <th><label class="control-label">Course</label></th>
-                <th><label class="control-label">Grade</label></th>
+                <th><label class="control-label"><a asp-page="Details" asp-route-orderby="Course" asp-route-id="@Model.Student.Id">Course</a></label></th>
+                <th><label class="control-label"><a asp-page="Details" asp-route-orderby="Grade" asp-route-id="@Model.Student.Id">Grade</a></label></th>
             </tr>
         </thead>
 
