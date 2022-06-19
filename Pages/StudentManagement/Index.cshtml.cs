@@ -46,6 +46,19 @@ namespace lab4.Pages.StudentManagement
 
                 if (student != null)
                 {
+                    while (true)
+                    {
+                        var academicrecord = await _context.AcademicRecords.FirstOrDefaultAsync(m => m.StudentId == id);
+
+                        if (academicrecord == null) { break; }
+
+                        if (academicrecord != null)
+                        {
+                            _context.AcademicRecords.Remove(academicrecord);
+                            await _context.SaveChangesAsync();
+                        }
+                    }
+
                     _context.Students.Remove(student);
                     await _context.SaveChangesAsync();
 

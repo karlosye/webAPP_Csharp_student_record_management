@@ -48,7 +48,13 @@ namespace lab4.Pages.StudentManagement
 
             if (orderby == "Course") { AllAvailableCoursesList.Sort((c1, c2) => c1.Title.CompareTo(c2.Title)); }
 
-            if (orderby == "Grade") { AcademicRecordsList.OrderBy(record => record.Grade); }
+            if (orderby == "Grade")
+            {
+                Console.WriteLine("order by grade - details page");
+
+                AcademicRecordsList.Sort((record1, record2) => { return (int)record1.Grade! - (int)record2.Grade!; });
+
+            }
 
             return Page();
         }
