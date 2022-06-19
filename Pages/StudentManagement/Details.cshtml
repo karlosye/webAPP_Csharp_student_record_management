@@ -32,9 +32,9 @@
 
         <tbody>
 
-            @foreach(var availableCourse in Model.AllAvailableCoursesList) {
+            @foreach(var record in Model.AcademicRecordsList) {
 
-                @foreach(var record in Model.AcademicRecordsList){
+                @foreach(var availableCourse in Model.AllAvailableCoursesList){
 
                     if (record.CourseCode == availableCourse.Code) {
 
