@@ -24,6 +24,8 @@ namespace lab4.Pages.StudentManagement
 
         public Student Student { get; set; } = default!;
 
+        public string OrderBy { get; set; }
+
         public async Task<IActionResult> OnGetAsync(string id, string orderby)
         {
             if (id == null || _context.Students == null)
@@ -46,14 +48,20 @@ namespace lab4.Pages.StudentManagement
                 AllAvailableCoursesList = await _context.Courses.ToListAsync();
             }
 
-            if (orderby == "Course") { AllAvailableCoursesList.Sort((c1, c2) => c1.Title.CompareTo(c2.Title)); }
+            if (orderby == "Course")
+            {
+
+                AllAvailableCoursesList.Sort((c1, c2) => c1.Title.CompareTo(c2.Title));
+
+                OrderBy = orderby;
+            }
 
             if (orderby == "Grade")
             {
-                Console.WriteLine("order by grade - details page");
 
                 AcademicRecordsList.Sort((record1, record2) => { return (int)record1.Grade! - (int)record2.Grade!; });
 
+                OrderBy = orderby;
             }
 
             return Page();

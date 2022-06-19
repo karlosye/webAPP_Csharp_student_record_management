@@ -32,16 +32,36 @@
 
         <tbody>
 
-            @foreach(var record in Model.AcademicRecordsList) {
+            @if(Model.OrderBy == "Grade" || Model.OrderBy == null)
+            {
+                @foreach(var record in Model.AcademicRecordsList) {
 
-                @foreach(var availableCourse in Model.AllAvailableCoursesList){
+                    @foreach(var availableCourse in Model.AllAvailableCoursesList){
 
-                    if (record.CourseCode == availableCourse.Code) {
+                        if (record.CourseCode == availableCourse.Code) {
 
-                        <tr>
-                            <td>@Html.DisplayFor(modelItem => availableCourse.Title)</td>
-                            <td>@Html.DisplayFor(modelItem => record.Grade)</td>
-                        </tr>
+                            <tr>
+                                <td>@Html.DisplayFor(modelItem => availableCourse.Title)</td>
+                                <td>@Html.DisplayFor(modelItem => record.Grade)</td>
+                            </tr>
+                        }
+                    }
+                }
+            }
+
+            @if (Model.OrderBy == "Course")
+            {
+                @foreach(var availableCourse in Model.AllAvailableCoursesList) {
+                    
+                    @foreach(var record in Model.AcademicRecordsList){
+
+                        if (record.CourseCode == availableCourse.Code) {
+
+                            <tr>
+                                <td>@Html.DisplayFor(modelItem => availableCourse.Title)</td>
+                                <td>@Html.DisplayFor(modelItem => record.Grade)</td>
+                            </tr>
+                        }
                     }
                 }
             }
